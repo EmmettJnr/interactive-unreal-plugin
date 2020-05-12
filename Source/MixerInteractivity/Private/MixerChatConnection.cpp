@@ -34,9 +34,9 @@ FMixerChatConnection::FMixerChatConnection(FOnlineChatMixer* InChatInterface, co
 	, ChatInterface(InChatInterface)
 	, User(UserId.AsShared())
 	, RoomId(InRoomId)
-	, ChannelId(0)
 	, ChatHistoryNum(0)
 	, ChatHistoryMax(10) // @TODO: pull from config once available
+	, ChannelId(0)
 	, bIsReady(false)
 	, bRejoinOnDisconnect(Config.bRejoinOnDisconnect)
 {

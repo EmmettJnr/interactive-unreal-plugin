@@ -34,9 +34,9 @@ FMixerLocalUser::FMixerLocalUser()
 }
 
 FMixerRemoteUser::FMixerRemoteUser()
-	: InputEnabled(false)
-	, ConnectedAt(FDateTime::MinValue())
+	: ConnectedAt(FDateTime::MinValue())
 	, InputAt(FDateTime::MinValue())
+	, InputEnabled(false)
 {
 
 }

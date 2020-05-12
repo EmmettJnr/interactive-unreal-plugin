@@ -110,8 +110,15 @@ void FMixerInteractivityModule_InteractiveCpp2::SetCurrentScene(FName Scene, FNa
 	if (InteractiveSession != nullptr)
 	{
 		// Special case - 'default' is used all over the place as a name, but with 'D'
-		const ANSICHAR* ActualGroupName = GroupName != NAME_None && GroupName != NAME_DefaultMixerParticipantGroup ? GroupName.GetPlainANSIString() : "default";
-		const ANSICHAR* ActualSceneName = Scene != NAME_None && Scene != NAME_DefaultMixerParticipantGroup ? Scene.GetPlainANSIString() : "default";
+		ANSICHAR ActualGroupName[NAME_SIZE] = "default";
+		ANSICHAR ActualSceneName[NAME_SIZE] = "default";
+
+		if (GroupName != NAME_None && GroupName != NAME_DefaultMixerParticipantGroup)
+			GroupName.GetPlainANSIString(ActualGroupName);
+
+		if (Scene != NAME_None && Scene != NAME_DefaultMixerParticipantGroup)
+			Scene.GetPlainANSIString(ActualSceneName);
+
 		interactive_group_set_scene(InteractiveSession, ActualGroupName, ActualSceneName);
 	}
 }
@@ -134,7 +141,10 @@ void FMixerInteractivityModule_InteractiveCpp2::TriggerButtonCooldown(FName Butt
 {
 	if (InteractiveSession != nullptr)
 	{
-		interactive_control_trigger_cooldown(InteractiveSession, Button.GetPlainANSIString(), static_cast<uint32>(CooldownTime.GetTotalMilliseconds()));
+		ANSICHAR ActualButton[NAME_SIZE];
+		Button.GetPlainANSIString(ActualButton);
+
+		interactive_control_trigger_cooldown(InteractiveSession, ActualButton, static_cast<uint32>(CooldownTime.GetTotalMilliseconds()));
 	}
 }
 
@@ -151,9 +161,16 @@ bool FMixerInteractivityModule_InteractiveCpp2::CreateGroup(FName GroupName, FNa
 		return false;
 	}
 
+	ANSICHAR ActualGroupName[NAME_SIZE];
+	GroupName.GetPlainANSIString(ActualGroupName);
+
 	// Special case - 'default' is used all over the place as a name, but with 'D'
-	const ANSICHAR* ActualSceneName = InitialScene != NAME_None && InitialScene != NAME_DefaultMixerParticipantGroup ? InitialScene.GetPlainANSIString() : "default";
-	return interactive_create_group(InteractiveSession, GroupName.GetPlainANSIString(), ActualSceneName) == MIXER_OK;
+	ANSICHAR ActualSceneName[NAME_SIZE] = "default";
+
+	if (InitialScene != NAME_None && InitialScene != NAME_DefaultMixerParticipantGroup)
+		InitialScene.GetPlainANSIString(ActualSceneName);
+
+	return interactive_create_group(InteractiveSession, ActualGroupName, ActualSceneName) == MIXER_OK;
 }
 
 bool FMixerInteractivityModule_InteractiveCpp2::MoveParticipantToGroup(FName GroupName, uint32 ParticipantId)
@@ -169,10 +186,13 @@ bool FMixerInteractivityModule_InteractiveCpp2::MoveParticipantToGroup(FName Gro
 		return false;
 	}
 
+	ANSICHAR ActualGroupName[NAME_SIZE];
+	GroupName.GetPlainANSIString(ActualGroupName);
+
 	return interactive_set_participant_group(
 		InteractiveSession,
 		TCHAR_TO_UTF8(*Participant->SessionGuid.ToString(EGuidFormats::DigitsWithHyphens).ToLower()),
-		GroupName.GetPlainANSIString()) == MIXER_OK;
+		ActualGroupName) == MIXER_OK;
 }
 
 void FMixerInteractivityModule_InteractiveCpp2::CaptureSparkTransaction(const FString& TransactionId)

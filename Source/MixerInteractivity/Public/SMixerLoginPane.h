@@ -33,8 +33,8 @@ class MIXERINTERACTIVITY_API SMixerLoginPane : public SCompoundWidget
 public:
 	SLATE_BEGIN_ARGS(SMixerLoginPane)
 		: _UserId()
-		, _BackgroundColor(0, 0, 0, 255)
 		, _AllowSilentLogin(false)
+		, _BackgroundColor(0, 0, 0, 255)
 	{}
 		SLATE_ATTRIBUTE(TSharedPtr<const FUniqueNetId>, UserId)
 
