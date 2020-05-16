@@ -227,7 +227,7 @@ bool FMixerInteractivityModule_InteractiveCpp2::StartInteractiveConnection()
 
 	SetInteractiveConnectionAuthState(EMixerLoginState::Logging_In);
 
-	ConnectOperation = Async<interactive_session>(EAsyncExecution::ThreadPool,
+	ConnectOperation = Async(EAsyncExecution::ThreadPool,
 		[]() -> interactive_session
 	{
 		const UMixerInteractivitySettings* Settings = GetDefault<UMixerInteractivitySettings>();

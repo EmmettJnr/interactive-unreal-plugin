@@ -824,7 +824,7 @@ bool FMixerInteractivityModule::LoginSilentlyInternal(TSharedPtr<const FUniqueNe
 	FString Xuid = UserId->ToString();
 
 	// Go async to avoid blocking the game thread on the cross-OS call
-	XboxUserOperation = Async<Windows::Xbox::System::User^>(EAsyncExecution::ThreadPool,
+	XboxUserOperation = Async(EAsyncExecution::ThreadPool,
 		[Xuid]() -> Windows::Xbox::System::User^
 	{
 		for (uint32 i = 0; i < Windows::Xbox::System::User::Users->Size; ++i)
