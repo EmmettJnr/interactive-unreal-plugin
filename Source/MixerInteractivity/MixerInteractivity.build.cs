@@ -37,7 +37,8 @@ public class MixerInteractivity : ModuleRules
 		Backend SelectedBackend = Backend.Null;
 		string ThirdPartyFolder = Path.Combine(ModuleDirectory, "..", "..", "ThirdParty");
 		PrivateIncludePaths.Add(Path.Combine(ThirdPartyFolder, "Include"));
-		PublicLibraryPaths.Add(Path.Combine(ThirdPartyFolder, "Lib", Target.Platform.ToString()));
+		
+		string LibPath = Path.Combine(ThirdPartyFolder, "Lib", Target.Platform.ToString());
 
 		if (Target.Platform == UnrealTargetPlatform.Win64 || Target.Platform == UnrealTargetPlatform.Win32)
 		{
@@ -74,21 +75,21 @@ public class MixerInteractivity : ModuleRules
 			PrivateIncludePaths.Add(Path.Combine(ThirdPartyFolder, "Include", "interactive-cpp"));
 			if (Target.Platform == UnrealTargetPlatform.Win64 || Target.Platform == UnrealTargetPlatform.Win32)
 			{
-				PublicAdditionalLibraries.Add("Interactivity.Win32.Cpp.lib");
-				PublicAdditionalLibraries.Add("cpprest140_2_9.lib");
-				PublicAdditionalLibraries.Add("winhttp.lib");
-				PublicAdditionalLibraries.Add("crypt32.lib");
-				PublicAdditionalLibraries.Add("bcrypt.lib");
+				PublicAdditionalLibraries.Add(Path.Combine(LibPath, "Interactivity.Win32.Cpp.lib"));
+				PublicAdditionalLibraries.Add(Path.Combine(LibPath, "cpprest140_2_9.lib"));
+				PublicAdditionalLibraries.Add(Path.Combine(LibPath, "winhttp.lib"));
+				PublicAdditionalLibraries.Add(Path.Combine(LibPath, "crypt32.lib"));
+				PublicAdditionalLibraries.Add(Path.Combine(LibPath, "bcrypt.lib"));
 			}
 			else if (Target.Platform == UnrealTargetPlatform.UWP64 || Target.Platform == UnrealTargetPlatform.UWP32)
 			{
-				PublicAdditionalLibraries.Add("Interactivity.UWP.Cpp.lib");
-				PublicAdditionalLibraries.Add("cpprest140_uwp_2_9.lib");
+				PublicAdditionalLibraries.Add(Path.Combine(LibPath, "Interactivity.UWP.Cpp.lib"));
+				PublicAdditionalLibraries.Add(Path.Combine(LibPath, "cpprest140_uwp_2_9.lib"));
 			}
 			else if (Target.Platform == UnrealTargetPlatform.XboxOne)
 			{
-				PublicAdditionalLibraries.Add("Interactivity.Xbox.Cpp.lib");
-				PublicAdditionalLibraries.Add("casablanca140.xbox.lib");
+				PublicAdditionalLibraries.Add(Path.Combine(LibPath, "Interactivity.Xbox.Cpp.lib"));
+				PublicAdditionalLibraries.Add(Path.Combine(LibPath, "casablanca140.xbox.lib"));
 			}
 		}
 
@@ -99,7 +100,7 @@ public class MixerInteractivity : ModuleRules
 
 		bEnableExceptions = true;
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-		bFasterWithoutUnity = true;
+		bUseUnity = false;
 	}
 
 	void AddPrivateDefinition(string Definition)

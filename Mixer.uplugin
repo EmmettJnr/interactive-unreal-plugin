@@ -28,7 +28,7 @@
 		},
 		{
 			"Name": "MixerInteractivityBlueprintNodes",
-			"Type": "Developer",
+			"Type": "DeveloperTool",
 			"LoadingPhase": "Default"
 		}
 	],
