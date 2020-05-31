@@ -50,7 +50,7 @@ TSharedRef<SWidget>	SGraphPinMixerObjectNameList::GetDefaultValueWidget()
 	}
 
 	// Create widget
-	TSharedRef<SWidget> ValueWidget =
+	TSharedRef<SWidget> ValueWidget1 =
 		SNew(SHorizontalBox)
 		+SHorizontalBox::Slot()
 		.AutoWidth()
@@ -77,7 +77,7 @@ TSharedRef<SWidget>	SGraphPinMixerObjectNameList::GetDefaultValueWidget()
 
 	IMixerInteractivityEditorModule::Get().OnDesignTimeObjectsChanged().AddSP(this, &SGraphPinMixerObjectNameList::RefreshOptions);
 
-	return ValueWidget;
+	return ValueWidget1;
 }
 
 void SGraphPinMixerObjectNameList::ComboBoxSelectionChanged(TSharedPtr<FName> NameItem, ESelectInfo::Type SelectInfo)
